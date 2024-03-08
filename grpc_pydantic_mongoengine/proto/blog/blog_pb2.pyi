@@ -65,36 +65,18 @@ class MultiBlogData(_message.Message):
     data: _containers.RepeatedCompositeFieldContainer[BlogData]
     def __init__(self, data: _Optional[_Iterable[_Union[BlogData, _Mapping]]] = ...) -> None: ...
 
-class GetBlogByUUIDQuery(_message.Message):
-    __slots__ = ("blog",)
-    BLOG_FIELD_NUMBER: _ClassVar[int]
-    blog: _base_pb2.GetByUUIDMsg
-    def __init__(self, blog: _Optional[_Union[_base_pb2.GetByUUIDMsg, _Mapping]] = ...) -> None: ...
-
-class GetBlogQuery(_message.Message):
-    __slots__ = ("blog",)
-    BLOG_FIELD_NUMBER: _ClassVar[int]
-    blog: _base_pb2.GetQuery
-    def __init__(self, blog: _Optional[_Union[_base_pb2.GetQuery, _Mapping]] = ...) -> None: ...
-
-class MultiGetBlogQuery(_message.Message):
-    __slots__ = ("blog",)
-    BLOG_FIELD_NUMBER: _ClassVar[int]
-    blog: _base_pb2.MultiGetQuery
-    def __init__(self, blog: _Optional[_Union[_base_pb2.MultiGetQuery, _Mapping]] = ...) -> None: ...
-
 class UpdateBlogQuery(_message.Message):
     __slots__ = ("new_data", "filter")
     NEW_DATA_FIELD_NUMBER: _ClassVar[int]
     FILTER_FIELD_NUMBER: _ClassVar[int]
     new_data: UpdateBlogData
-    filter: GetBlogQuery
-    def __init__(self, new_data: _Optional[_Union[UpdateBlogData, _Mapping]] = ..., filter: _Optional[_Union[GetBlogQuery, _Mapping]] = ...) -> None: ...
+    filter: _base_pb2.GetQuery
+    def __init__(self, new_data: _Optional[_Union[UpdateBlogData, _Mapping]] = ..., filter: _Optional[_Union[_base_pb2.GetQuery, _Mapping]] = ...) -> None: ...
 
 class UpdateMultiBlogQuery(_message.Message):
     __slots__ = ("new_data", "filter")
     NEW_DATA_FIELD_NUMBER: _ClassVar[int]
     FILTER_FIELD_NUMBER: _ClassVar[int]
     new_data: UpdateBlogData
-    filter: MultiGetBlogQuery
-    def __init__(self, new_data: _Optional[_Union[UpdateBlogData, _Mapping]] = ..., filter: _Optional[_Union[MultiGetBlogQuery, _Mapping]] = ...) -> None: ...
+    filter: _base_pb2.MultiGetQuery
+    def __init__(self, new_data: _Optional[_Union[UpdateBlogData, _Mapping]] = ..., filter: _Optional[_Union[_base_pb2.MultiGetQuery, _Mapping]] = ...) -> None: ...

@@ -40,34 +40,23 @@ message MultiBlogData {
     repeated BlogData data = 1;
 }
 
-message GetBlogByUUIDQuery {
-    grpc_pydantic_mongoengine.base.GetByUUIDMsg blog = 1;
-}
-
-message GetBlogQuery {
-    grpc_pydantic_mongoengine.base.GetQuery blog = 1;
-}
-
-message MultiGetBlogQuery {
-    grpc_pydantic_mongoengine.base.MultiGetQuery blog = 1;
-}
-
 message UpdateBlogQuery {
     UpdateBlogData new_data = 1;
-    GetBlogQuery filter = 2;
+    grpc_pydantic_mongoengine.base.GetQuery filter = 2;
 }
 
 message UpdateMultiBlogQuery {
     UpdateBlogData new_data = 1;
-    MultiGetBlogQuery filter = 2;
+    grpc_pydantic_mongoengine.base.MultiGetQuery filter = 2;
 }
 
 service Blog {
-    rpc CreateBlog (CreateBlogData) returns (BlogData);
-    rpc GetBlogByUUID (GetBlogByUUIDQuery) returns (BlogData);
-    rpc GetBlog (GetBlogQuery) returns (BlogData);
-    rpc GetMultiBlog (MultiGetBlogQuery) returns (MultiBlogData);
-    rpc UpdateBlog (UpdateBlogQuery) returns (BlogData);
-    rpc DeleteBlog (GetBlogQuery) returns (google.protobuf.Empty);
-    rpc DeleteMultiBlog (MultiGetBlogQuery) returns (google.protobuf.Empty);
+    rpc Create (CreateBlogData) returns (BlogData);
+    rpc GetByUUID (grpc_pydantic_mongoengine.base.GetByUUIDMsg) returns (BlogData);
+    rpc Get (grpc_pydantic_mongoengine.base.GetQuery) returns (BlogData);
+    rpc GetMulti (grpc_pydantic_mongoengine.base.MultiGetQuery) returns (MultiBlogData);
+    rpc Update (UpdateBlogQuery) returns (BlogData);
+    rpc Delete (grpc_pydantic_mongoengine.base.GetQuery) returns (google.protobuf.Empty);
+    rpc DeleteMulti (grpc_pydantic_mongoengine.base.MultiGetQuery) returns (google.protobuf.Empty);
+    rpc Count (grpc_pydantic_mongoengine.base.MultiGetQuery) returns (grpc_pydantic_mongoengine.base.CountMsg);
 }

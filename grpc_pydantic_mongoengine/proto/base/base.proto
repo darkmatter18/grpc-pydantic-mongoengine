@@ -31,3 +31,7 @@ message MultiGetQuery {
     // Number of Fields to be limited, like SQL LIMIT. Default 0
     optional int32 limit = 3;
 }
+
+message CountMsg {
+    int64 count = 1;
+}

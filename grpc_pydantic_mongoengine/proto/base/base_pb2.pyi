@@ -26,3 +26,9 @@ class MultiGetQuery(_message.Message):
     skip: int
     limit: int
     def __init__(self, filter: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., skip: _Optional[int] = ..., limit: _Optional[int] = ...) -> None: ...
+
+class CountMsg(_message.Message):
+    __slots__ = ("count",)
+    COUNT_FIELD_NUMBER: _ClassVar[int]
+    count: int
+    def __init__(self, count: _Optional[int] = ...) -> None: ...

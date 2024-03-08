@@ -3,6 +3,7 @@
 import grpc
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
+from grpc_pydantic_mongoengine.proto.base import base_pb2 as grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2
 from grpc_pydantic_mongoengine.proto.blog import blog_pb2 as grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2
 
 
@@ -15,83 +16,94 @@ class BlogStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.CreateBlog = channel.unary_unary(
-                '/grpc_pydantic_mongoengine.blog.Blog/CreateBlog',
+        self.Create = channel.unary_unary(
+                '/grpc_pydantic_mongoengine.blog.Blog/Create',
                 request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.CreateBlogData.SerializeToString,
                 response_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.FromString,
                 )
-        self.GetBlogByUUID = channel.unary_unary(
-                '/grpc_pydantic_mongoengine.blog.Blog/GetBlogByUUID',
-                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.GetBlogByUUIDQuery.SerializeToString,
+        self.GetByUUID = channel.unary_unary(
+                '/grpc_pydantic_mongoengine.blog.Blog/GetByUUID',
+                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetByUUIDMsg.SerializeToString,
                 response_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.FromString,
                 )
-        self.GetBlog = channel.unary_unary(
-                '/grpc_pydantic_mongoengine.blog.Blog/GetBlog',
-                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.GetBlogQuery.SerializeToString,
+        self.Get = channel.unary_unary(
+                '/grpc_pydantic_mongoengine.blog.Blog/Get',
+                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetQuery.SerializeToString,
                 response_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.FromString,
                 )
-        self.GetMultiBlog = channel.unary_unary(
-                '/grpc_pydantic_mongoengine.blog.Blog/GetMultiBlog',
-                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.MultiGetBlogQuery.SerializeToString,
+        self.GetMulti = channel.unary_unary(
+                '/grpc_pydantic_mongoengine.blog.Blog/GetMulti',
+                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MultiGetQuery.SerializeToString,
                 response_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.MultiBlogData.FromString,
                 )
-        self.UpdateBlog = channel.unary_unary(
-                '/grpc_pydantic_mongoengine.blog.Blog/UpdateBlog',
+        self.Update = channel.unary_unary(
+                '/grpc_pydantic_mongoengine.blog.Blog/Update',
                 request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.UpdateBlogQuery.SerializeToString,
                 response_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.FromString,
                 )
-        self.DeleteBlog = channel.unary_unary(
-                '/grpc_pydantic_mongoengine.blog.Blog/DeleteBlog',
-                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.GetBlogQuery.SerializeToString,
+        self.Delete = channel.unary_unary(
+                '/grpc_pydantic_mongoengine.blog.Blog/Delete',
+                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetQuery.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
-        self.DeleteMultiBlog = channel.unary_unary(
-                '/grpc_pydantic_mongoengine.blog.Blog/DeleteMultiBlog',
-                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.MultiGetBlogQuery.SerializeToString,
+        self.DeleteMulti = channel.unary_unary(
+                '/grpc_pydantic_mongoengine.blog.Blog/DeleteMulti',
+                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MultiGetQuery.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                )
+        self.Count = channel.unary_unary(
+                '/grpc_pydantic_mongoengine.blog.Blog/Count',
+                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MultiGetQuery.SerializeToString,
+                response_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.CountMsg.FromString,
                 )
 
 
 class BlogServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def CreateBlog(self, request, context):
+    def Create(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetBlogByUUID(self, request, context):
+    def GetByUUID(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetBlog(self, request, context):
+    def Get(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetMultiBlog(self, request, context):
+    def GetMulti(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def UpdateBlog(self, request, context):
+    def Update(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def DeleteBlog(self, request, context):
+    def Delete(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def DeleteMultiBlog(self, request, context):
+    def DeleteMulti(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Count(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -100,40 +112,45 @@ class BlogServicer(object):
 
 def add_BlogServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'CreateBlog': grpc.unary_unary_rpc_method_handler(
-                    servicer.CreateBlog,
+            'Create': grpc.unary_unary_rpc_method_handler(
+                    servicer.Create,
                     request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.CreateBlogData.FromString,
                     response_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.SerializeToString,
             ),
-            'GetBlogByUUID': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetBlogByUUID,
-                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.GetBlogByUUIDQuery.FromString,
+            'GetByUUID': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetByUUID,
+                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetByUUIDMsg.FromString,
                     response_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.SerializeToString,
             ),
-            'GetBlog': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetBlog,
-                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.GetBlogQuery.FromString,
+            'Get': grpc.unary_unary_rpc_method_handler(
+                    servicer.Get,
+                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetQuery.FromString,
                     response_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.SerializeToString,
             ),
-            'GetMultiBlog': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetMultiBlog,
-                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.MultiGetBlogQuery.FromString,
+            'GetMulti': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetMulti,
+                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MultiGetQuery.FromString,
                     response_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.MultiBlogData.SerializeToString,
             ),
-            'UpdateBlog': grpc.unary_unary_rpc_method_handler(
-                    servicer.UpdateBlog,
+            'Update': grpc.unary_unary_rpc_method_handler(
+                    servicer.Update,
                     request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.UpdateBlogQuery.FromString,
                     response_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.SerializeToString,
             ),
-            'DeleteBlog': grpc.unary_unary_rpc_method_handler(
-                    servicer.DeleteBlog,
-                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.GetBlogQuery.FromString,
+            'Delete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Delete,
+                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetQuery.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
-            'DeleteMultiBlog': grpc.unary_unary_rpc_method_handler(
-                    servicer.DeleteMultiBlog,
-                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.MultiGetBlogQuery.FromString,
+            'DeleteMulti': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteMulti,
+                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MultiGetQuery.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'Count': grpc.unary_unary_rpc_method_handler(
+                    servicer.Count,
+                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MultiGetQuery.FromString,
+                    response_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.CountMsg.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -146,7 +163,7 @@ class Blog(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def CreateBlog(request,
+    def Create(request,
             target,
             options=(),
             channel_credentials=None,
@@ -156,14 +173,14 @@ class Blog(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/CreateBlog',
+        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/Create',
             grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.CreateBlogData.SerializeToString,
             grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetBlogByUUID(request,
+    def GetByUUID(request,
             target,
             options=(),
             channel_credentials=None,
@@ -173,14 +190,14 @@ class Blog(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/GetBlogByUUID',
-            grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.GetBlogByUUIDQuery.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/GetByUUID',
+            grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetByUUIDMsg.SerializeToString,
             grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetBlog(request,
+    def Get(request,
             target,
             options=(),
             channel_credentials=None,
@@ -190,14 +207,14 @@ class Blog(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/GetBlog',
-            grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.GetBlogQuery.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/Get',
+            grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetQuery.SerializeToString,
             grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetMultiBlog(request,
+    def GetMulti(request,
             target,
             options=(),
             channel_credentials=None,
@@ -207,14 +224,14 @@ class Blog(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/GetMultiBlog',
-            grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.MultiGetBlogQuery.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/GetMulti',
+            grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MultiGetQuery.SerializeToString,
             grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.MultiBlogData.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def UpdateBlog(request,
+    def Update(request,
             target,
             options=(),
             channel_credentials=None,
@@ -224,14 +241,14 @@ class Blog(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/UpdateBlog',
+        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/Update',
             grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.UpdateBlogQuery.SerializeToString,
             grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def DeleteBlog(request,
+    def Delete(request,
             target,
             options=(),
             channel_credentials=None,
@@ -241,14 +258,14 @@ class Blog(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/DeleteBlog',
-            grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.GetBlogQuery.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/Delete',
+            grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetQuery.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def DeleteMultiBlog(request,
+    def DeleteMulti(request,
             target,
             options=(),
             channel_credentials=None,
@@ -258,8 +275,25 @@ class Blog(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/DeleteMultiBlog',
-            grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.MultiGetBlogQuery.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/DeleteMulti',
+            grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MultiGetQuery.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Count(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/Count',
+            grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MultiGetQuery.SerializeToString,
+            grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.CountMsg.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
