@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package grpc_pydantic_mongoengine.base;
+
+import "google/protobuf/struct.proto";
+
+/**
+ * Query Message to get using UUID primary key from the server
+ */
+message GetByUUIDMsg {
+    // UUID of the data to be retrieved
+    string uuid = 1;
+}
+
+/**
+ * Query Message to get one data from the server
+ */
+message GetQuery {
+    // Get Query filter for one data in JSON format
+    google.protobuf.Struct filter = 1;
+}
+
+/**
+ * Query Message to get Multiple data from the server
+ */
+message MultiGetQuery {
+    // Get Query filter in JSON format
+    optional google.protobuf.Struct filter = 1;
+    // Number of Fields to be skipped from the start, like SQL offset. Default 0
+    optional int32 skip = 2;
+    // Number of Fields to be limited, like SQL LIMIT. Default 0
+    optional int32 limit = 3;
+}

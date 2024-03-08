@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package grpc_pydantic_mongoengine.blog;
+
+import "google/protobuf/empty.proto";
+
+import "grpc_pydantic_mongoengine/proto/base/base.proto";
+
+enum Publisher {
+    PUBLISHER_UNSPECIFIED = 0;
+    TYPE_A = 1;
+    TYPE_B = 2;
+    TYPE_C = 3;
+}
+
+message CreateBlogData {
+    string title = 1;
+    string description = 2;
+    string created_by = 3;
+    Publisher publised_via = 4;
+}
+
+message UpdateBlogData {
+    optional string title = 1;
+    optional string description = 2;
+    optional string created_by = 3;
+    optional Publisher publised_via = 4;
+}
+
+message BlogData {
+    string title = 1;
+    string description = 2;
+    string created_by = 3;
+    string created_on = 4;
+    Publisher publised_via = 5;
+}
+
+message MultiBlogData {
+    repeated BlogData data = 1;
+}
+
+message GetBlogByUUIDQuery {
+    grpc_pydantic_mongoengine.base.GetByUUIDMsg blog = 1;
+}
+
+message GetBlogQuery {
+    grpc_pydantic_mongoengine.base.GetQuery blog = 1;
+}
+
+message MultiGetBlogQuery {
+    grpc_pydantic_mongoengine.base.MultiGetQuery blog = 1;
+}
+
+message UpdateBlogQuery {
+    UpdateBlogData new_data = 1;
+    GetBlogQuery filter = 2;
+}
+
+message UpdateMultiBlogQuery {
+    UpdateBlogData new_data = 1;
+    MultiGetBlogQuery filter = 2;
+}
+
+service Blog {
+    rpc CreateBlog (CreateBlogData) returns (BlogData);
+    rpc GetBlogByUUID (GetBlogByUUIDQuery) returns (BlogData);
+    rpc GetBlog (GetBlogQuery) returns (BlogData);
+    rpc GetMultiBlog (MultiGetBlogQuery) returns (MultiBlogData);
+    rpc UpdateBlog (UpdateBlogQuery) returns (BlogData);
+    rpc DeleteBlog (GetBlogQuery) returns (google.protobuf.Empty);
+    rpc DeleteMultiBlog (MultiGetBlogQuery) returns (google.protobuf.Empty);
+}
