@@ -218,7 +218,6 @@ class CRUDBaseGrpc(
         return_model: bool = False,
         **kwargs
     ) -> ModelType | SingleDataProtobufMessageType:
-
         if isinstance(obj_in, self.update_protobuf_message_class):
             data_in = self.update_schema_class.model_validate(
                 MessageToDict(
@@ -227,9 +226,9 @@ class CRUDBaseGrpc(
                     preserving_proto_field_name=True,
                     including_default_value_fields=True
                 )
-            ).model_dump()
+            ).model_dump(exclude_none=True)
         elif isinstance(obj_in, self.update_schema_class):
-            data_in = obj_in.model_dump()
+            data_in = obj_in.model_dump(exclude_none=True)
         else:
             data_in = obj_in
 
