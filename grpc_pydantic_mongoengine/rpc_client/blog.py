@@ -97,7 +97,7 @@ class Blog:
                 use_integers_for_enums=False,
                 preserving_proto_field_name=True,
                 including_default_value_fields=True
-            ))
+            )['data'])
 
     async def update(
         self,

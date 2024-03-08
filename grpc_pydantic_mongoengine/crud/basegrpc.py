@@ -311,8 +311,12 @@ class CRUDBaseGrpc(
         self,
         db_query_set: BaseQuerySet
     ) -> MultiDataProtobufMessageType:
+        _data = pydantic.TypeAdapter(list[self.data_schema_class]).validate_python(db_query_set)
         return ParseDict(
-            {'data': pydantic.TypeAdapter(list[self.data_schema_class]).validate_python(db_query_set)},
+            {'data': [
+                self.data_schema_class.model_validate(d).model_dump(mode="json")
+                for d in _data
+            ]},
             self.multi_protobuf_message_class(),
             ignore_unknown_fields=True
         )
