@@ -44,18 +44,20 @@ class UpdateBlogData(_message.Message):
     def __init__(self, title: _Optional[str] = ..., description: _Optional[str] = ..., created_by: _Optional[str] = ..., publised_via: _Optional[_Union[Publisher, str]] = ...) -> None: ...
 
 class BlogData(_message.Message):
-    __slots__ = ("title", "description", "created_by", "created_on", "publised_via")
+    __slots__ = ("title", "description", "created_by", "created_on", "publised_via", "uuid")
     TITLE_FIELD_NUMBER: _ClassVar[int]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     CREATED_BY_FIELD_NUMBER: _ClassVar[int]
     CREATED_ON_FIELD_NUMBER: _ClassVar[int]
     PUBLISED_VIA_FIELD_NUMBER: _ClassVar[int]
+    UUID_FIELD_NUMBER: _ClassVar[int]
     title: str
     description: str
     created_by: str
     created_on: str
     publised_via: Publisher
-    def __init__(self, title: _Optional[str] = ..., description: _Optional[str] = ..., created_by: _Optional[str] = ..., created_on: _Optional[str] = ..., publised_via: _Optional[_Union[Publisher, str]] = ...) -> None: ...
+    uuid: str
+    def __init__(self, title: _Optional[str] = ..., description: _Optional[str] = ..., created_by: _Optional[str] = ..., created_on: _Optional[str] = ..., publised_via: _Optional[_Union[Publisher, str]] = ..., uuid: _Optional[str] = ...) -> None: ...
 
 class MultiBlogData(_message.Message):
     __slots__ = ("data",)

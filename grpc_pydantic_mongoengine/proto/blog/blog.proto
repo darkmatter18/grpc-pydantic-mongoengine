@@ -33,6 +33,7 @@ message BlogData {
     string created_by = 3;
     string created_on = 4;
     Publisher publised_via = 5;
+    string uuid = 6;
 }
 
 message MultiBlogData {
