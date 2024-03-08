@@ -3,6 +3,7 @@ import uuid
 import grpc
 from pydantic import TypeAdapter
 from google.protobuf.struct_pb2 import Struct
+from google.protobuf.json_format import MessageToDict
 
 from grpc_pydantic_mongoengine.proto.base import base_pb2
 from grpc_pydantic_mongoengine.proto.blog import blog_pb2, blog_pb2_grpc
@@ -25,7 +26,12 @@ class Blog:
             resp: blog_pb2.BlogData = await stub.CreateBlog(
                 blog_pb2.CreateBlogData(**obj_in.model_dump(mode="json"))
             )
-            return schemas.Blog.model_validate(resp)
+            return schemas.Blog.model_validate(MessageToDict(
+                resp,
+                use_integers_for_enums=False,
+                preserving_proto_field_name=True,
+                including_default_value_fields=True
+            ))
 
     async def get_by_uuid(
         self,
@@ -39,7 +45,12 @@ class Blog:
                     blog=base_pb2.GetByUUIDMsg(uuid=str(uuid))
                 )
             )
-            return schemas.Blog.model_validate(resp)
+            return schemas.Blog.model_validate(MessageToDict(
+                resp,
+                use_integers_for_enums=False,
+                preserving_proto_field_name=True,
+                including_default_value_fields=True
+            ))
 
     async def get(
         self,
@@ -54,7 +65,12 @@ class Blog:
                     blog=base_pb2.GetQuery(filter=s)
                 )
             )
-            return schemas.Blog.model_validate(resp)
+            return schemas.Blog.model_validate(MessageToDict(
+                resp,
+                use_integers_for_enums=False,
+                preserving_proto_field_name=True,
+                including_default_value_fields=True
+            ))
 
     async def get_multi(
         self,
@@ -76,7 +92,12 @@ class Blog:
                     )
                 )
             )
-            return TypeAdapter(list[schemas.Blog]).validate_python(resp)
+            return TypeAdapter(list[schemas.Blog]).validate_python(MessageToDict(
+                resp,
+                use_integers_for_enums=False,
+                preserving_proto_field_name=True,
+                including_default_value_fields=True
+            ))
 
     async def update(
         self,
@@ -98,7 +119,12 @@ class Blog:
                     )
                 )
             )
-            return schemas.Blog.model_validate(resp)
+            return schemas.Blog.model_validate(MessageToDict(
+                resp,
+                use_integers_for_enums=False,
+                preserving_proto_field_name=True,
+                including_default_value_fields=True
+            ))
 
     async def delete(self, **query):
         s = Struct()
