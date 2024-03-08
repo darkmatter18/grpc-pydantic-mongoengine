@@ -30,6 +30,7 @@ async def serve():
 
 async def start():
     logger.info('Startup')
+    from grpc_pydantic_mongoengine.settings import mongo_monitoring # noqa
     host = "mongodb://identity:pzD358aGgq8WnBmonGtf@172.174.4.229:27017/identity?authSource=admin"  # TODO
     connect(host=host, uuidRepresentation='standard')
     await serve()
