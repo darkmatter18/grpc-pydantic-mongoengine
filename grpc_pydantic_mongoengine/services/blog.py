@@ -59,3 +59,10 @@ class BlogServicer(blog_pb2_grpc.BlogServicer):
     ):
         await crud.crudblog.remove_many(multi_get_query=request.blog)
         return Empty()
+
+    async def Count(
+        self,
+        request: base_pb2.MultiGetQuery,
+        context
+    ) -> base_pb2.CountMsg:
+        return crud.crudblog.count(multi_get_query=request)

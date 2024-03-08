@@ -296,6 +296,23 @@ class CRUDBaseGrpc(
 
         return self._purse_multi_to_protobuf(q)
 
+    async def count(
+        self,
+        *,
+        multi_get_query: base_pb2.MultiGetQuery
+    ) -> base_pb2.CountMsg:
+        _count = self.model.objects.filter(
+            **MessageToDict(
+                multi_get_query.filter,
+                use_integers_for_enums=False,
+                preserving_proto_field_name=True,
+                including_default_value_fields=False
+            )
+        ).count()
+        return base_pb2.CountMsg(
+            count=_count
+        )
+
     def _purse_single_to_protobuf(
         self,
         db_obj: ModelType,

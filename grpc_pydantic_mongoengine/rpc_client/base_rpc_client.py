@@ -179,3 +179,13 @@ class BaseRpcClient(
             await stub.DeleteMulti(
                 base_pb2.MultiGetQuery(filter=s)
             )
+
+    async def count(self, **query) -> int:
+        s = Struct()
+        s.update(query)
+        async with grpc.aio.insecure_channel(self._url) as channel:
+            stub = self._stub(channel)
+            count: base_pb2.CountMsg = stub.Count(
+                base_pb2.MultiGetQuery(filter=s)
+            )
+            return count.count
