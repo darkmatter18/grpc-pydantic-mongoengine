@@ -15,4 +15,10 @@ out = asyncio.run(blog.create(
     )
 ))
 
+# out = asyncio.run(blog.get_multi())
+
+# out = asyncio.run(blog.get_multi(
+#     created_by='9f21a352-77f9-4d1f-ab07-c6c9b6caec26'
+# ))
+
 print(out)
