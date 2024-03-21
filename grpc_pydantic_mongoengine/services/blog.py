@@ -44,6 +44,13 @@ class BlogServicer(blog_pb2_grpc.BlogServicer):
         model = await crud.crudblog.get(get_query=request.filter, return_model=True)
         return await crud.crudblog.update_one(db_obj=model, obj_in=request.new_data)
 
+    async def UpdateRaw(
+        self,
+        request: base_pb2.UpdateRawQuery,
+        context: grpc.aio.ServicerContext
+    ):
+        return await crud.crudblog.update_raw(update_raw_query=request)
+
     async def Delete(
         self,
         request: base_pb2.GetQuery,
