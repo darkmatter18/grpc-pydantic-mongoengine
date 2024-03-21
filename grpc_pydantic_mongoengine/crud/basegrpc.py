@@ -102,7 +102,19 @@ class CRUDBaseGrpc(
         return_model: bool = False,
         **save_kwargs
     ) -> SingleDataProtobufMessageType | ModelType:
+        """Create Method.
+        Use this method to create new object
 
+        Args:
+            obj_in (CreateProtobufMessageType | CreateSchemaType | Dict[str, Any]): Data of the new object to be created
+            extra_data (Dict[str, Any], optional): New data in the format of dict, w
+            here the key is a field name and value is the field value. Defaults to {}.
+            return_model (bool, optional): If True, the function will return model instance, else protobuf.
+            Defaults to False.
+
+        Returns:
+            SingleDataProtobufMessageType | ModelType: Reponse Object
+        """
         if isinstance(obj_in, self.create_protobuf_message_class):
             data_in = self.create_schema_class.model_validate(
                 MessageToDict(
@@ -141,11 +153,13 @@ class CRUDBaseGrpc(
         """Get the object by using the UUID
 
         Args:
-            get_by_uuid_msg (GetByUUIDMessageType): GetByUUID message data
-            return_model (bool): If True, the function will return model instance, else protobuf.
+            get_by_uuid_msg (base_pb2.GetByUUIDMsg): GetByUUID message data
+            extra_filter (Dict[str, Any], optional): Extra filter in the format of Dict. Defaults to {}.
+            return_model (bool, optional): If True, the function will return model instance, else protobuf.
+            Defaults to False.
 
         Returns:
-            SingleDataResponseMessageType: The response message
+            SingleDataProtobufMessageType | ModelType: Reponse Object
         """
         _q = {'uuid': get_by_uuid_msg.uuid, **extra_filter}
 
@@ -160,7 +174,6 @@ class CRUDBaseGrpc(
         self,
         *,
         get_query: base_pb2.GetQuery,
-        ignore_unknown_fields: bool = True,
         extra_filter: Dict[str, Any] = {},
         return_model: bool = False,
     ) -> SingleDataProtobufMessageType | ModelType:
@@ -168,11 +181,12 @@ class CRUDBaseGrpc(
 
         Args:
             get_query (base_pb2.GetQuery): Get Query message
-            ignore_unknown_fields (bool, optional): If True, do not raise errors for unknown fields. Defaults to True.
-            return_model (bool): If True, the function will return model instance, else protobuf.
+            extra_filter (Dict[str, Any], optional): Extra filter in the format of Dict. Defaults to {}.
+            return_model (bool, optional): If True, the function will return model instance, else protobuf.
+            Defaults to False.
 
         Returns:
-            SingleDataResponseMessageType: The response message
+            SingleDataProtobufMessageType | ModelType: Reponse Object
         """
         # TODO: usage of Q is not done
         _q = {
@@ -190,7 +204,7 @@ class CRUDBaseGrpc(
         if return_model:
             return db_obj
 
-        return self._purse_single_to_protobuf(db_obj, ignore_unknown_fields)
+        return self._purse_single_to_protobuf(db_obj)
 
     async def get_multi(
         self,
@@ -203,13 +217,13 @@ class CRUDBaseGrpc(
 
         Args:
             multi_get_query (base_pb2.MultiGetQuery): The get query model, should be a instance of the multi_get_query
-            ignore_unknown_fields (bool, optional): If True, do not raise errors for unknown fields. Defaults to True.
-            return_model (bool): If True, the function will return model instance, else protobuf.
+            extra_filter (Dict[str, Any], optional): Extra filter in the format of Dict. Defaults to {}.
+            return_model (bool, optional): If True, the function will return model instance, else protobuf.
+            Defaults to False.
 
         Returns:
-            MultiDataResponseMessageType: Response from the database
+            MultiDataProtobufMessageType | List[ModelType]: Reponse Object
         """
-
         _q = {**MessageToDict(multi_get_query.filter), **extra_filter}
         logger.info(f"Get Multi query: {_q}, skip: {multi_get_query.skip} limit: {multi_get_query.limit}")
         q = self.model.objects.filter(**_q).skip(multi_get_query.skip)
@@ -230,6 +244,19 @@ class CRUDBaseGrpc(
         return_model: bool = False,
         **kwargs
     ) -> ModelType | SingleDataProtobufMessageType:
+        """Update the Data of a object in the Model
+
+        Args:
+            db_obj (ModelType): The existing object
+            obj_in (UpdateProtobufMessageType | UpdateSchemaType | Dict[str, Any]): The New Data to be replaced
+            with the old data
+            extra_update_data (Dict[str, Any], optional): Extra data to be added. Defaults to {}.
+            return_model (bool, optional): If True, the function will return model instance, else protobuf.
+            Defaults to False.
+
+        Returns:
+            ModelType | SingleDataProtobufMessageType: Reponse updated Object
+        """
         if isinstance(obj_in, self.update_protobuf_message_class):
             data_in = self.update_schema_class.model_validate(
                 MessageToDict(
@@ -299,12 +326,11 @@ class CRUDBaseGrpc(
 
         Args:
             get_query (base_pb2.GetQuery): Get Query message
-            ignore_unknown_fields (bool, optional): If True, do not raise errors for unknown fields. Defaults to True.
             return_model (bool, optional): If True, the function will return model instance, else protobuf.
             Defaults to False.
 
         Returns:
-            SingleDataResponseMessageType | ModelType: response from the database
+            SingleDataResponseMessageType | ModelType: Response Deleted Object
         """
         db_obj = self.model.objects.get(**MessageToDict(
             get_query.filter,
@@ -324,6 +350,16 @@ class CRUDBaseGrpc(
         multi_get_query: base_pb2.MultiGetQuery,
         return_model: bool = False
     ) -> MultiDataProtobufMessageType | List[ModelType]:
+        """Remove Multiple objects from the DB
+
+        Args:
+            multi_get_query (base_pb2.MultiGetQuery): Multi Query
+            return_model (bool, optional): If True, the function will return model instance, else protobuf.
+            Defaults to False.
+
+        Returns:
+            MultiDataProtobufMessageType | List[ModelType]: Response Deleted Object
+        """
         q = self.model.objects.filter(
             **MessageToDict(
                 multi_get_query.filter,
@@ -343,8 +379,17 @@ class CRUDBaseGrpc(
     async def count(
         self,
         *,
-        multi_get_query: base_pb2.MultiGetQuery
+        multi_get_query: base_pb2.MultiGetQuery,
+        return_int: bool = False
     ) -> base_pb2.CountMsg:
+        """Get the number of objects with matching query
+
+        Args:
+            multi_get_query (base_pb2.MultiGetQuery): Multi Query
+
+        Returns:
+            base_pb2.CountMsg: Response Count Object
+        """
         _count = self.model.objects.filter(
             **MessageToDict(
                 multi_get_query.filter,
@@ -353,6 +398,10 @@ class CRUDBaseGrpc(
                 including_default_value_fields=False
             )
         ).count()
+
+        if return_int:
+            return _count
+
         return base_pb2.CountMsg(
             count=_count
         )
@@ -361,6 +410,14 @@ class CRUDBaseGrpc(
         self,
         db_obj: ModelType,
     ) -> SingleDataProtobufMessageType:
+        """Purse a single DB Object to Protobuf Message
+
+        Args:
+            db_obj (ModelType): Model Object
+
+        Returns:
+            SingleDataProtobufMessageType: Protobuf Object
+        """
         return ParseDict(
             self.data_schema_class.model_validate(db_obj).model_dump(mode="json"),
             self.single_protobuf_message_class(),
@@ -371,6 +428,14 @@ class CRUDBaseGrpc(
         self,
         db_query_set: BaseQuerySet
     ) -> MultiDataProtobufMessageType:
+        """Purse multiple DB Objects to Multi Protobuf Message
+
+        Args:
+            db_query_set (BaseQuerySet): Model Query Set
+
+        Returns:
+            MultiDataProtobufMessageType: Multi Protobuf Object
+        """
         _data = pydantic.TypeAdapter(list[self.data_schema_class]).validate_python(db_query_set)
         return ParseDict(
             {'data': [
