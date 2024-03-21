@@ -1,5 +1,5 @@
 import uuid
-from typing import Generic, Type, TypeVar
+from typing import Any, Dict, Generic, Type, TypeVar
 
 import grpc
 from pydantic import BaseModel, TypeAdapter
@@ -161,6 +161,31 @@ class BaseRpcClient(
                 preserving_proto_field_name=True,
                 including_default_value_fields=True
             ))
+
+    async def update_raw(
+        self,
+        *,
+        query: Dict[str, Any],
+        **raw_update
+    ) -> DataSchemaType:
+        s = Struct()
+        s.update(query)
+        r = Struct()
+        r.update(raw_update)
+        async with grpc.aio.insecure_channel(self._url) as channel:
+            stub = self._stub(channel)
+            resp: self._single_data_protobuf_message_class = await stub.UpdateRaw(
+                base_pb2.UpdateRawQuery(
+                    filter=s,
+                    data=r
+                )
+            )
+            return TypeAdapter(list[self._data_schema_class]).validate_python(MessageToDict(
+                resp,
+                use_integers_for_enums=False,
+                preserving_proto_field_name=True,
+                including_default_value_fields=True
+            )['data'])
 
     async def delete(self, **query):
         s = Struct()
