@@ -27,6 +27,14 @@ class MultiGetQuery(_message.Message):
     limit: int
     def __init__(self, filter: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., skip: _Optional[int] = ..., limit: _Optional[int] = ...) -> None: ...
 
+class UpdateRawQuery(_message.Message):
+    __slots__ = ("filter", "data")
+    FILTER_FIELD_NUMBER: _ClassVar[int]
+    DATA_FIELD_NUMBER: _ClassVar[int]
+    filter: _struct_pb2.Struct
+    data: _struct_pb2.Struct
+    def __init__(self, filter: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ..., data: _Optional[_Union[_struct_pb2.Struct, _Mapping]] = ...) -> None: ...
+
 class CountMsg(_message.Message):
     __slots__ = ("count",)
     COUNT_FIELD_NUMBER: _ClassVar[int]

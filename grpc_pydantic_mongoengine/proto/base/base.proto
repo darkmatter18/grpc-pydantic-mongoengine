@@ -32,6 +32,16 @@ message MultiGetQuery {
     optional int32 limit = 3;
 }
 
+/**
+ * Query Message for RAW update
+ */
+message UpdateRawQuery {
+    // Get Query filter for one data in JSON format
+    google.protobuf.Struct filter = 1;
+    // Mongoengine update arguments
+    google.protobuf.Struct data = 2;
+}
+
 message CountMsg {
     int64 count = 1;
 }
