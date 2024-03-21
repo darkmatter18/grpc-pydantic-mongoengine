@@ -61,6 +61,18 @@ class CRUDBaseGrpc(
             update_schema_class: Type[UpdateSchemaType],
             data_schema_class: Type[DataSchemaType]
     ):
+        """Constructor of the Crud object
+
+        Args:
+            model: MongoEngine Model
+            create_protobuf_message_class: Protobuf Message for Creating new Object
+            update_protobuf_message_class: Protobuf Message for Updating existing Object
+            single_protobuf_message_class: Protobuf Message for the Object
+            multi_protobuf_message_class: Protobuf Message for Multiple Objects
+            create_schema_class: PyDantic Message for Creating new Object
+            update_schema_class: PyDantic Message for Updating existing Object
+            data_schema_class: PyDantic Message for the Object
+        """
         self.model = model
         # Initialized Reponse Data
         self.create_protobuf_message_class = create_protobuf_message_class
@@ -244,6 +256,38 @@ class CRUDBaseGrpc(
             return db_obj
 
         return self._purse_single_to_protobuf(db_obj)
+
+    async def update_raw(
+        self,
+        *,
+        update_raw_query: base_pb2.UpdateRawQuery,
+        return_model: bool = False
+    ) -> MultiDataProtobufMessageType | List[ModelType]:
+        """Update using the MongoEngine Raw Query
+
+        Args:
+            update_raw_query (base_pb2.UpdateRawQuery): UpdateRawQuery
+            return_model (bool, optional): Weather to return model or protobug object. Defaults to False.
+
+        Returns:
+            MultiDataProtobufMessageType | List[ModelType]: Reponse Object
+        """
+        db_obj = self.model.objects.filter(**MessageToDict(
+            update_raw_query.filter,
+            use_integers_for_enums=False,
+            preserving_proto_field_name=True,
+            including_default_value_fields=False
+        )).update(**MessageToDict(
+            update_raw_query.data,
+            use_integers_for_enums=False,
+            preserving_proto_field_name=True,
+            including_default_value_fields=False
+        ))
+
+        if return_model:
+            return db_obj
+
+        return self._purse_multi_to_protobuf(db_obj)
 
     async def remove_one(
         self,
