@@ -56,6 +56,7 @@ service Blog {
     rpc Get (grpc_pydantic_mongoengine.base.GetQuery) returns (BlogData);
     rpc GetMulti (grpc_pydantic_mongoengine.base.MultiGetQuery) returns (MultiBlogData);
     rpc Update (UpdateBlogQuery) returns (BlogData);
+    rpc UpdateRaw (grpc_pydantic_mongoengine.base.UpdateRawQuery) returns (MultiBlogData);
     rpc Delete (grpc_pydantic_mongoengine.base.GetQuery) returns (google.protobuf.Empty);
     rpc DeleteMulti (grpc_pydantic_mongoengine.base.MultiGetQuery) returns (google.protobuf.Empty);
     rpc Count (grpc_pydantic_mongoengine.base.MultiGetQuery) returns (grpc_pydantic_mongoengine.base.CountMsg);

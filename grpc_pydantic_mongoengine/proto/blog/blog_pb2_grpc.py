@@ -41,6 +41,11 @@ class BlogStub(object):
                 request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.UpdateBlogQuery.SerializeToString,
                 response_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.FromString,
                 )
+        self.UpdateRaw = channel.unary_unary(
+                '/grpc_pydantic_mongoengine.blog.Blog/UpdateRaw',
+                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.UpdateRawQuery.SerializeToString,
+                response_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.MultiBlogData.FromString,
+                )
         self.Delete = channel.unary_unary(
                 '/grpc_pydantic_mongoengine.blog.Blog/Delete',
                 request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetQuery.SerializeToString,
@@ -91,6 +96,12 @@ class BlogServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def UpdateRaw(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def Delete(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -136,6 +147,11 @@ def add_BlogServicer_to_server(servicer, server):
                     servicer.Update,
                     request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.UpdateBlogQuery.FromString,
                     response_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.SerializeToString,
+            ),
+            'UpdateRaw': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateRaw,
+                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.UpdateRawQuery.FromString,
+                    response_serializer=grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.MultiBlogData.SerializeToString,
             ),
             'Delete': grpc.unary_unary_rpc_method_handler(
                     servicer.Delete,
@@ -244,6 +260,23 @@ class Blog(object):
         return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/Update',
             grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.UpdateBlogQuery.SerializeToString,
             grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.BlogData.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdateRaw(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/UpdateRaw',
+            grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.UpdateRawQuery.SerializeToString,
+            grpc__pydantic__mongoengine_dot_proto_dot_blog_dot_blog__pb2.MultiBlogData.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
