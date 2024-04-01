@@ -37,7 +37,6 @@ class BlogOnDB(BlogBase):
     title: str = Field(...)
     description: str = Field(...)
     created_by: UUID = Field(...)
-    created_on: datetime = Field(...)
     publised_via: Publisher = Field(...)
 
     model_config = ConfigDict(from_attributes=True)

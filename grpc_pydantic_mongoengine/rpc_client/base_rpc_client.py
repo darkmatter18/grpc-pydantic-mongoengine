@@ -104,7 +104,7 @@ class BaseRpcClient(
             s.update(query)
             stub = self._stub(channel)
             resp: self._single_data_protobuf_message_class = await stub.Get(
-                blog=base_pb2.GetQuery(filter=s)
+                base_pb2.GetQuery(filter=s)
             )
             return self._data_schema_class.model_validate(MessageToDict(
                 resp,
@@ -225,7 +225,7 @@ class BaseRpcClient(
             s.update(query)
             stub = self._stub(channel)
             resp: self._single_data_protobuf_message_class = await stub.GetMetaData(
-                blog=base_pb2.GetQuery(filter=s)
+                base_pb2.GetQuery(filter=s)
             )
             return MetaData.model_validate(MessageToDict(
                 resp,
