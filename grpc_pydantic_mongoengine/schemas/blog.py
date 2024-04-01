@@ -4,6 +4,8 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field, ConfigDict
 
+from grpc_pydantic_mongoengine.schemas.base import MetaData
+
 
 class Publisher(Enum):
     TYPE_A = "TYPE_A"
@@ -30,6 +32,7 @@ class BlogUpdate(BlogBase):
 
 
 class BlogOnDB(BlogBase):
+    metadata: MetaData = Field(...)
     uuid: UUID = Field(...)
     title: str = Field(...)
     description: str = Field(...)

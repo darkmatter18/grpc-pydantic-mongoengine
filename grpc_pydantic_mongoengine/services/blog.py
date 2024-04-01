@@ -70,6 +70,13 @@ class BlogServicer(blog_pb2_grpc.BlogServicer):
     async def Count(
         self,
         request: base_pb2.MultiGetQuery,
-        context
+        context: grpc.aio.ServicerContext
     ) -> base_pb2.CountMsg:
         return crud.crudblog.count(multi_get_query=request)
+
+    async def GetMetaData(
+        self,
+        request: base_pb2.GetQuery,
+        context: grpc.aio.ServicerContext
+    ) -> base_pb2.MetadataMessage:
+        return await crud.crudblog.get_metadata(get_query=request)

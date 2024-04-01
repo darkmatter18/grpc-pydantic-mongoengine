@@ -40,3 +40,13 @@ class CountMsg(_message.Message):
     COUNT_FIELD_NUMBER: _ClassVar[int]
     count: int
     def __init__(self, count: _Optional[int] = ...) -> None: ...
+
+class MetadataMessage(_message.Message):
+    __slots__ = ("etag", "created_on", "updated_on")
+    ETAG_FIELD_NUMBER: _ClassVar[int]
+    CREATED_ON_FIELD_NUMBER: _ClassVar[int]
+    UPDATED_ON_FIELD_NUMBER: _ClassVar[int]
+    etag: str
+    created_on: str
+    updated_on: str
+    def __init__(self, etag: _Optional[str] = ..., created_on: _Optional[str] = ..., updated_on: _Optional[str] = ...) -> None: ...

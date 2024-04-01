@@ -15,7 +15,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n/grpc_pydantic_mongoengine/proto/base/base.proto\x12\x1egrpc_pydantic_mongoengine.base\x1a\x1cgoogle/protobuf/struct.proto\"\x1c\n\x0cGetByUUIDMsg\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"3\n\x08GetQuery\x12\'\n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x82\x01\n\rMultiGetQuery\x12,\n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x17.google.protobuf.StructH\x00\x88\x01\x01\x12\x11\n\x04skip\x18\x02 \x01(\x05H\x01\x88\x01\x01\x12\x12\n\x05limit\x18\x03 \x01(\x05H\x02\x88\x01\x01\x42\t\n\x07_filterB\x07\n\x05_skipB\x08\n\x06_limit\"`\n\x0eUpdateRawQuery\x12\'\n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12%\n\x04\x64\x61ta\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x19\n\x08\x43ountMsg\x12\r\n\x05\x63ount\x18\x01 \x01(\x03\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n/grpc_pydantic_mongoengine/proto/base/base.proto\x12\x1egrpc_pydantic_mongoengine.base\x1a\x1cgoogle/protobuf/struct.proto\"\x1c\n\x0cGetByUUIDMsg\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"3\n\x08GetQuery\x12\'\n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x82\x01\n\rMultiGetQuery\x12,\n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x17.google.protobuf.StructH\x00\x88\x01\x01\x12\x11\n\x04skip\x18\x02 \x01(\x05H\x01\x88\x01\x01\x12\x12\n\x05limit\x18\x03 \x01(\x05H\x02\x88\x01\x01\x42\t\n\x07_filterB\x07\n\x05_skipB\x08\n\x06_limit\"`\n\x0eUpdateRawQuery\x12\'\n\x06\x66ilter\x18\x01 \x01(\x0b\x32\x17.google.protobuf.Struct\x12%\n\x04\x64\x61ta\x18\x02 \x01(\x0b\x32\x17.google.protobuf.Struct\"\x19\n\x08\x43ountMsg\x12\r\n\x05\x63ount\x18\x01 \x01(\x03\"G\n\x0fMetadataMessage\x12\x0c\n\x04\x65tag\x18\x01 \x01(\t\x12\x12\n\ncreated_on\x18\x02 \x01(\t\x12\x12\n\nupdated_on\x18\x03 \x01(\tb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,4 +32,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_UPDATERAWQUERY']._serialized_end=425
   _globals['_COUNTMSG']._serialized_start=427
   _globals['_COUNTMSG']._serialized_end=452
+  _globals['_METADATAMESSAGE']._serialized_start=454
+  _globals['_METADATAMESSAGE']._serialized_end=525
 # @@protoc_insertion_point(module_scope)

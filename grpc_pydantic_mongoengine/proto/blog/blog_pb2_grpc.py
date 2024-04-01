@@ -61,6 +61,11 @@ class BlogStub(object):
                 request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MultiGetQuery.SerializeToString,
                 response_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.CountMsg.FromString,
                 )
+        self.GetMetaData = channel.unary_unary(
+                '/grpc_pydantic_mongoengine.blog.Blog/GetMetaData',
+                request_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetQuery.SerializeToString,
+                response_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MetadataMessage.FromString,
+                )
 
 
 class BlogServicer(object):
@@ -120,6 +125,12 @@ class BlogServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetMetaData(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_BlogServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -167,6 +178,11 @@ def add_BlogServicer_to_server(servicer, server):
                     servicer.Count,
                     request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MultiGetQuery.FromString,
                     response_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.CountMsg.SerializeToString,
+            ),
+            'GetMetaData': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetMetaData,
+                    request_deserializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetQuery.FromString,
+                    response_serializer=grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MetadataMessage.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -328,5 +344,22 @@ class Blog(object):
         return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/Count',
             grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MultiGetQuery.SerializeToString,
             grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.CountMsg.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetMetaData(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpc_pydantic_mongoengine.blog.Blog/GetMetaData',
+            grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.GetQuery.SerializeToString,
+            grpc__pydantic__mongoengine_dot_proto_dot_base_dot_base__pb2.MetadataMessage.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

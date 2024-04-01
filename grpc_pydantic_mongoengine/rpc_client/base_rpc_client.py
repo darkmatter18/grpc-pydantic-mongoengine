@@ -9,6 +9,7 @@ from google.protobuf.struct_pb2 import Struct
 from google.protobuf.json_format import MessageToDict
 
 from grpc_pydantic_mongoengine.proto.base import base_pb2
+from grpc_pydantic_mongoengine.schemas.base import MetaData
 
 # Protobuf Model Types
 CreateDataProtobufMessageType = TypeVar("CreateDataProtobufMessageType", bound=Message)
@@ -214,3 +215,21 @@ class BaseRpcClient(
                 base_pb2.MultiGetQuery(filter=s)
             )
             return count.count
+
+    async def get_metadata(
+        self,
+        **query
+    ) -> DataSchemaType:
+        async with grpc.aio.insecure_channel(self._url) as channel:
+            s = Struct()
+            s.update(query)
+            stub = self._stub(channel)
+            resp: self._single_data_protobuf_message_class = await stub.GetMetaData(
+                blog=base_pb2.GetQuery(filter=s)
+            )
+            return MetaData.model_validate(MessageToDict(
+                resp,
+                use_integers_for_enums=False,
+                preserving_proto_field_name=True,
+                including_default_value_fields=True
+            ))

@@ -7,6 +7,8 @@ from typing import (
     Generic,
     TypeVar
 )
+import datetime
+from uuid import uuid4
 
 from mongoengine.base import BaseDocument
 from mongoengine.queryset.base import BaseQuerySet
@@ -129,7 +131,11 @@ class CRUDBaseGrpc(
         else:
             data_in = obj_in
 
-        data = {**data_in, **extra_data}
+        data = {**data_in, **extra_data, 'metadata': {
+            'etag': uuid4(),
+            'created_on': datetime.datetime.now(tz=datetime.timezone.utc),
+            'updated_on': datetime.datetime.now(tz=datetime.timezone.utc)
+        }}
         logger.info(f"Data: {data}")
 
         db_obj = self.model(**data)
@@ -271,7 +277,10 @@ class CRUDBaseGrpc(
         else:
             data_in = obj_in
 
-        update_data = {**data_in, **extra_update_data}
+        update_data = {**data_in, **extra_update_data, 'metadata': {
+            'etag': uuid4(),
+            'updated_on': datetime.datetime.now(tz=datetime.timezone.utc)
+        }}
 
         logger.info(f"Update New Data: {update_data}")
 
@@ -404,6 +413,34 @@ class CRUDBaseGrpc(
 
         return base_pb2.CountMsg(
             count=_count
+        )
+
+    async def get_metadata(
+        self,
+        *,
+        get_query: base_pb2.GetQuery,
+        extra_filter: Dict[str, Any] = {},
+        return_model: bool = False,
+    ) -> base_pb2.MetadataMessage | ModelType:
+        _q = {
+            **MessageToDict(
+                get_query.filter,
+                use_integers_for_enums=False,
+                preserving_proto_field_name=True,
+                including_default_value_fields=False
+            ),
+            **extra_filter
+        }
+
+        logger.info(f"Get query: {_q}")
+        db_obj = self.model.objects.get(**_q)
+        if return_model:
+            return db_obj.metadata
+
+        return ParseDict(
+            self.data_schema_class.model_validate(db_obj).model_dump(mode="json")['metadata'],
+            base_pb2.MetadataMessage(),
+            ignore_unknown_fields=True
         )
 
     def _purse_single_to_protobuf(

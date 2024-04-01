@@ -45,3 +45,9 @@ message UpdateRawQuery {
 message CountMsg {
     int64 count = 1;
 }
+
+message MetadataMessage {
+    string etag = 1;
+    string created_on = 2;
+    string updated_on = 3;
+}
