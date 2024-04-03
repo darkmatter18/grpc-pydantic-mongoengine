@@ -13,6 +13,8 @@ enum Publisher {
     TYPE_C = 3;
 }
 
+// Messages and Data
+
 message CreateBlogData {
     string title = 1;
     string description = 2;
@@ -27,6 +29,11 @@ message UpdateBlogData {
     optional Publisher publised_via = 4;
 }
 
+message UpdateBlogQuery {
+    UpdateBlogData new_data = 1;
+    grpc_pydantic_mongoengine.base.GetQuery filter = 2;
+}
+
 message BlogData {
     string title = 1;
     string description = 2;
@@ -38,16 +45,6 @@ message BlogData {
 
 message MultiBlogData {
     repeated BlogData data = 1;
-}
-
-message UpdateBlogQuery {
-    UpdateBlogData new_data = 1;
-    grpc_pydantic_mongoengine.base.GetQuery filter = 2;
-}
-
-message UpdateMultiBlogQuery {
-    UpdateBlogData new_data = 1;
-    grpc_pydantic_mongoengine.base.MultiGetQuery filter = 2;
 }
 
 service Blog {
